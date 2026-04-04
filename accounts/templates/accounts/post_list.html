@@ -1,0 +1,25 @@
+<h1>All Posts</h1>
+
+<a href="/posts/new/">Create New Post</a> |
+<a href="/logout/">Logout</a>
+
+<hr>
+
+{% for post in posts %}
+    <div>
+        <b>{{ post.user.username }}</b><br>
+        {{ post.text }}<br>
+
+        {% if post.image %}
+            <img src="{{ post.image.url }}" width="200"><br>
+        {% endif %}
+
+        {% if post.user == request.user %}
+            <a href="/posts/{{ post.id }}/edit/">Edit</a>
+            <a href="/posts/{{ post.id }}/delete/">Delete</a>
+        {% endif %}
+        <hr>
+    </div>
+{% empty %}
+    <p>No posts yet</p>
+{% endfor %}

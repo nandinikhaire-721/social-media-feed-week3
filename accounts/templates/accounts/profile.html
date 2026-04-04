@@ -1,0 +1,23 @@
+<h2>Welcome, {{ user.username }}!</h2>
+<p>Email: {{ user.email }}</p>
+<a href="{% url 'logout' %}">Logout</a>
+{% if user != user_obj %}
+    {% if is_following %}
+        <a href="{% url 'unfollow' user_obj.username %}">Unfollow</a>
+    {% else %}
+        <a href="{% url 'follow' user_obj.username %}">Follow</a>
+    {% endif %}
+{% endif %}
+<h3>Followers:</h3>
+<ul>
+    {% for user in followers %}
+        <li>{{ user.username }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Following:</h3>
+<ul>
+    {% for user in following %}
+        <li>{{ user.username }}</li>
+    {% endfor %}
+</ul>
