@@ -1,0 +1,16 @@
+<h2>Your Feed</h2>
+
+{% for post in posts %}
+    <div style="border:1px solid black; margin:10px; padding:10px;">
+        <p><strong>{{ post.user.username }}</strong></p>
+        <p>{{ post.content }}</p>
+
+        {% if post.image %}
+            <img src="{{ post.image.url }}" width="200">
+        {% endif %}
+
+        <p><small>{{ post.created_at }}</small></p>
+    </div>
+{% empty %}
+    <p>No posts yet. Follow users to see their posts.</p>
+{% endfor %}

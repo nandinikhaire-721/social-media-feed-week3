@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Profile, Post
 from .forms import PostForm
 
 
@@ -139,3 +139,15 @@ def post_delete(request, pk):
         return redirect('post_list')
 
     return render(request, 'accounts/post_confirm_delete.html', {'post': post})
+
+
+# ================= FEED =================
+
+@login_required
+def feed(request):
+    profile = Profile.objects.get(user=request.user)
+    following_users = profile.following.all()
+
+    posts = Post.objects.filter(user__in=following_users).order_by('-created_at')
+
+    return render(request, 'accounts/feed.html', {'posts': posts})
